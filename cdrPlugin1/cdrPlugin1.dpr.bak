@@ -1,0 +1,388 @@
+library cdrPlugin1;
+
+
+
+{$R *.dres}
+
+uses
+  Winapi.Windows,
+  Winapi.ActiveX,
+  System.SysUtils,
+  System.Classes,
+  Vcl.Graphics,
+  VGCore_TLB in 'X8\VGCore_TLB.pas',
+  frmMain in 'frmMain.pas' {fMain},
+  BaseForm in 'BaseForm.pas' {TBaseForm},
+  frmToJPG in 'frmToJPG.pas' {fToJPG},
+  frmTest in 'frmTest.pas' {fTest},
+  Utils in 'Utils.pas',
+  frmConvertTo in 'frmConvertTo.pas' {fConvertTo},
+  frmScreen in 'frmScreen.pas' {fScreen},
+  frmCropMark in 'frmCropMark.pas' {fCropMark},
+  Generics.Collections,
+  frmOnekeyPS in 'frmOnekeyPS.pas' {fOnekeyPS},
+  frmQrcode in 'frmQrcode.pas' {fQrcode},
+  ArrayEx in 'ArrayEx.pas',
+  System.IOUtils,
+  frmSelect in 'frmSelect.pas' {fSelect},
+  System.IniFiles,
+  frmGroupSelection in 'frmGroupSelection.pas' {fGroupSelection};
+
+{$R *.res}
+
+type
+  TisnPlugin = class(TObject, IVGAppPlugin, IDispatch, IUnknown)
+    const
+      CVersion: Integer = 20160422;
+      CommandBarName: WideString = 'tisn201600401';
+      CommandID_All: WideString = 'cdrplugin1_全部';
+      CommandID_ConvertTo: WideString = 'cdrplugin1_转换';
+      CommandID_ToJPG: WideString = 'cdrplugin1_导出图片';
+      CommandID_CropMark: WideString = 'cdrplugin1_裁切标记';
+  private
+    mApp: IVGApplication;
+    m_lCookie: longint;
+    m_ulRefCount: ULONG;
+    myCommandBar: ICUICommandBar;
+    cmdList: TDictionary<WideString, WideString>;
+    procedure OnAppStart; safecall;
+    procedure AddPluginCommands;
+    procedure RemovePluginCommands;
+    procedure AddButton(ID, Icon: WideString; guid: WideString = ''; ctn: ICUICommandBar = nil);
+    function AddButtonGroup(name: WideString): ICUICommandBar;
+  public
+    constructor Create;
+  public
+    //IVGAppPlugin
+    procedure OnLoad(const Application: IVGApplication); safecall;
+    procedure StartSession; safecall;
+    procedure StopSession; safecall;
+    procedure OnUnload; safecall;
+  public
+    //IDispatch
+    function GetTypeInfoCount(out Count: Integer): HResult; stdcall;
+    function GetTypeInfo(Index, LocaleID: Integer; out TypeInfo): HResult; stdcall;
+    function GetIDsOfNames(const IID: TGUID; Names: Pointer; NameCount, LocaleID: Integer; DispIDs: Pointer): HResult; stdcall;
+    function Invoke(dispid: Integer; const IID: TGUID; LocaleID: Integer; Flags: Word; var Params; VarResult, ExcepInfo, ArgErr: Pointer): HResult; stdcall;
+  public
+    function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
+    function _AddRef: Integer; stdcall;
+    function _Release: Integer; stdcall;
+  end;
+
+constructor TisnPlugin.Create;
+begin
+  m_ulRefCount := 0;
+  cmdList := TDictionary<WideString, WideString>.Create;
+  cmdList.Add(CommandID_All, '所有');
+  cmdList.Add(CommandID_ToJPG, '导出图片');
+  cmdList.Add(CommandID_ConvertTo, '转换');
+  cmdList.Add(CommandID_CropMark, '裁切标记');
+end;
+
+procedure TisnPlugin.OnAppStart;
+var
+  i: Integer;
+  b: ICUICommandBar;
+  st: TResourceStream;
+  tmpPath: string;
+  inifile: TIniFile;
+  rVersion: Integer;
+begin
+  AddPluginCommands;
+  inifile := GetSettingsInifile;
+  rVersion := inifile.ReadInteger('插件配置', '版本号', 0);
+  //如果版本号不对，强制删除当前工具栏
+  if rVersion <> CVersion then
+  begin
+    try
+      mApp.CommandBars.Item[CommandBarName].Delete;
+    finally
+      inifile.WriteInteger('插件配置', '版本号', CVersion);
+    end;
+  end;
+  inifile.Destroy;
+  try
+    myCommandBar := mApp.CommandBars.Item[CommandBarName];
+  except
+
+    tmpPath := TPath.GetTempPath + '\';
+    if mApp.VersionMajor < 17 then
+    begin
+      st := TResourceStream.Create(HInstance, 'toolbar_X4', RT_RCDATA);
+      st.SaveToFile(tmpPath + 'TTx4.xslt');
+      st.Free;
+      mApp.ImportWorkspace(tmpPath + 'TTx4.xslt');
+      DeleteFile(tmpPath + 'TTx4.xslt')
+    end
+    else if mApp.VersionMajor = 17 then
+    begin
+      st := TResourceStream.Create(HInstance, 'toolbar_X7', RT_RCDATA);
+      st.SaveToFile(tmpPath + 'TTx7.cdws');
+      st.Free;
+      mApp.ImportWorkspace(tmpPath + 'TTx7.cdws');
+      DeleteFile(tmpPath + 'TTx7.cdws')
+    end
+    else if mApp.VersionMajor >= 18 then
+    begin
+      st := TResourceStream.Create(HInstance, 'toolbar_X8', RT_RCDATA);
+      st.SaveToFile(tmpPath + 'TTx8.cdws');
+      st.Free;
+      mApp.ImportWorkspace(tmpPath + 'TTx8.cdws');
+      DeleteFile(tmpPath + 'TTx8.cdws')
+    end;
+    mApp.CommandBars.Item[CommandBarName].Visible := True;
+  end;
+  Exit;
+end;
+
+procedure TisnPlugin.AddPluginCommands;
+var
+  pair: TPair<WideString, WideString>;
+begin
+  for pair in cmdList do
+  begin
+    mApp.AddPluginCommand(pair.Key, pair.Value, pair.Value);
+  end;
+end;
+
+procedure TisnPlugin.RemovePluginCommands;
+var
+  pair: TPair<WideString, WideString>;
+begin
+  for pair in cmdList do
+  begin
+    mApp.RemovePluginCommand(pair.Key);
+  end;
+end;
+
+procedure TisnPlugin.AddButton(ID, Icon: WideString; guid: WideString = ''; ctn: ICUICommandBar = nil);
+var
+  btn: ICUIControl;
+  bmp: TBitmap;
+  fn: string;
+begin
+  if ctn = nil then
+  begin
+    btn := myCommandBar.Controls.AddCustomButton(cdrCmdCategoryPlugins, ID, 0, False);
+  end
+  else
+  begin
+    btn := ctn.Controls.AddCustomButton(cdrCmdCategoryPlugins, ID, 0, False);
+  end;
+  if mApp.VersionMajor >= 18 then
+  begin
+    btn.SetIcon2('guid://' + guid);
+  end
+  else
+  begin
+    bmp := TBitmap.Create;
+    bmp.LoadFromResourceName(HInstance, 'Bitmap_' + Icon);
+    fn := mApp.CorelScriptTools.GetTempFolder + '\tisntmp.bmp';
+    bmp.SaveToFile(fn);
+    bmp.Destroy;
+    {X8不支持此方法}
+    btn.SetCustomIcon(fn);
+    DeleteFile(fn);
+  end;
+end;
+
+function TisnPlugin.AddButtonGroup(name: WideString): ICUICommandBar;
+var
+  bg: ICUIControl;
+begin
+  bg := myCommandBar.Controls.Add(cdrControlIDNewmenu, 0, False);
+
+  bg.Caption := name;
+  bg.DescriptionText := name;
+  bg.Visible := True;
+  Result := mApp.CommandBars[name];
+end;
+
+procedure TisnPlugin.OnLoad(const Application: IVGApplication);
+begin
+  self.mApp := Application;
+  if self.mApp <> nil then
+  begin
+    self.mApp._AddRef;
+  end;
+end;
+
+procedure TisnPlugin.StartSession;
+begin
+  try
+    self.m_lCookie := self.mApp.AdviseEvents(self);
+  except
+    on E: Exception do
+      MessageBox(0, PWideChar(E.Message + e.StackTrace), 'StartSession', 0);
+  end;
+end;
+
+procedure TisnPlugin.StopSession;
+begin
+  try
+    self.mApp.UnadviseEvents(self.m_lCookie);
+    RemovePluginCommands;
+
+    //X4中不会自动释放，导致关闭CorelDraw程序后进程不会退出，所以在这手动释放一下
+    self.mApp._Release;
+    self.Destroy;
+  except
+    on E: Exception do
+      MessageBox(0, PWideChar(E.Message + e.StackTrace), 'StopSession', 0);
+  end;
+end;
+
+procedure TisnPlugin.OnUnload;
+begin
+
+  if self.mApp <> nil then
+  begin
+    self.mApp._Release;
+    self.Destroy;
+  end;
+end;
+
+function TisnPlugin.GetTypeInfoCount(out Count: Integer): HResult;
+begin
+  Result := E_NOTIMPL;
+end;
+
+function TisnPlugin.GetTypeInfo(Index: Integer; LocaleID: Integer; out TypeInfo): HResult;
+begin
+  Result := E_NOTIMPL;
+end;
+
+function TisnPlugin.GetIDsOfNames(const IID: TGUID; Names: Pointer; NameCount: Integer; LocaleID: Integer; DispIDs: Pointer): HResult;
+begin
+  Result := E_NOTIMPL;
+end;
+
+function TisnPlugin.Invoke(dispid: Integer; const IID: TGUID; LocaleID: Integer; Flags: Word; var Params; VarResult, ExcepInfo, ArgErr: Pointer): HResult; stdcall;
+var
+  strCMD: WideString;
+  f: TTBaseForm;
+  DispParams: TDispParams;
+begin
+  f := nil;
+  DispParams := TDispParams(Params);
+  case dispid of
+    $0011:
+      begin // DISPID_APP_SELCHANGE
+
+      end;
+    $0012:
+      begin // DISPID_APP_START
+        self.OnAppStart;
+      end;
+    $0014:
+      begin // DISPID_APP_ONPLUGINCMD
+      {单击按钮事件}
+        if Variant(DispParams.cArgs = 1) then
+        begin
+          strCMD := DispParams.rgvarg^[0].bstrVal;
+          if strCMD = CommandID_All then
+          begin
+            f := TfMain.Create(nil, mApp);
+          end
+          else if strCMD = CommandID_ToJPG then
+          begin
+            f := TfToJPG.Create(nil, mApp);
+          end
+          else if strCMD = CommandID_ConvertTo then
+          begin
+            f := TfConvertTo.Create(nil, mApp);
+          end
+          else if strCMD = CommandID_CropMark then
+          begin
+            f := TfCropMark.Create(nil, mApp);
+          end;
+          if f <> nil then
+          begin
+            f.Show;
+          end;
+        end;
+      end;
+    $0015:
+      begin // DISPID_APP_ONPLUGINCMDSTATE
+        if DispParams.cArgs = 3 then
+        begin
+          strCMD := DispParams.rgvarg^[2].bstrVal;
+          if cmdList.ContainsKey(strCMD) then
+          begin
+            DispParams.rgvarg^[1].pbool^ := mApp.Documents.Count > 0;
+          end;
+        end;
+      end;
+  end;
+  Result := S_OK;
+end;
+
+function TisnPlugin.QueryInterface(const IID: TGUID; out Obj): Hresult;
+var
+  hr: HResult;
+begin
+  hr := S_OK;
+  //Inc(m_ulRefCount);
+  if (IID = IID_IUnknown) then
+  begin
+    IUnknown(Obj) := self;
+  end
+  else if (IID = IID_IDispatch) then
+  begin
+    IDispatch(Obj) := self;
+  end
+  else if (IID = IID_IVGAppPlugin) then
+  begin
+    IVGAppPlugin(Obj) := Self;
+  end
+  else
+  begin
+    //Dec(m_ulRefCount);
+    hr := E_NOINTERFACE;
+  end;
+  Result := hr;
+end;
+
+//此处很重要
+function TisnPlugin._AddRef;
+begin
+  inc(self.m_ulRefCount);
+  Result := self.m_ulRefCount;
+end;
+
+//此处很重要
+function TisnPlugin._Release;
+begin
+  dec(self.m_ulRefCount);
+  if (self.m_ulRefCount = 0) then
+  begin
+    Destroy;
+  end;
+  Result := self.m_ulRefCount;
+end;
+
+function AttachPlugin(var ppIPlugin): ULONG; stdcall;
+begin
+  IVGAppPlugin(ppIPlugin) := TisnPlugin.Create;
+  Result := $100;
+end;
+
+function DllEnterPoint(Reason: Integer): Boolean;
+begin
+  case Reason of
+    DLL_PROCESS_ATTACH:
+      begin
+      end;
+  end;
+  Result := True;
+end;
+
+exports
+  AttachPlugin;
+
+begin
+  DllProc := @DllEnterPoint;
+  DllEnterPoint(DLL_PROCESS_ATTACH);
+end.
+

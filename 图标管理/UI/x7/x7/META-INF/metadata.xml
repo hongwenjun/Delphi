@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ws="http://namespace.corel.com/workspace/metadata/1.0/" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/">
+            <xmp:CreateDate>2016-02-01T11:51:10Z</xmp:CreateDate>
+            <xmp:ModifyDate>2016-02-01T11:51:10Z</xmp:ModifyDate>
+            <xmp:MetadataDate>2016-02-01T11:51:10Z</xmp:MetadataDate>
+            <dc:format>application/x-vnd.corel.zcf.workspace+zip</dc:format>
+            <dc:title>
+                <rdf:Alt>
+                    <rdf:li xml:lang="x-default">tisn2015b</rdf:li>
+                    <rdf:li xml:lang="cs">tisn2015b</rdf:li>
+                </rdf:Alt>
+            </dc:title>
+            <ws:Category>
+                <rdf:Alt />
+            </ws:Category>
+            <dc:description>
+                <rdf:Alt>
+                    <rdf:li xml:lang="x-default">CorelDRAW X7 默认工作区已从头进行重新设计，提供更加直观的工具和控件位置。此工作区是使用过其他矢量图形软件以及熟悉 CorelDRAW 的用户的理想选择。</rdf:li>
+                    <rdf:li xml:lang="cs">CorelDRAW X7 默认工作区已从头进行重新设计，提供更加直观的工具和控件位置。此工作区是使用过其他矢量图形软件以及熟悉 CorelDRAW 的用户的理想选择。</rdf:li>
+                </rdf:Alt>
+            </dc:description>
+            <xmpMM:InstanceID>5ee609b4-162c-4feb-b916-9f09429c416d</xmpMM:InstanceID>
+            <xmpMM:DocumentID>4e0703ab-2df1-4383-a864-689a45260bfe</xmpMM:DocumentID>
+            <ws:UIOrder>200</ws:UIOrder>
+        </rdf:Description>
+    </rdf:RDF>
+</x:xmpmeta>

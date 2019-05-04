@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{CFCCD7ED-7663-4BF3-9920-31D990B3ABE9}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="GMS破解.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\控件包\TisnPackage.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="GMS破解">
+        <MSBuild Projects="GMS破解.dproj"/>
+    </Target>
+    <Target Name="GMS破解:Clean">
+        <MSBuild Projects="GMS破解.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GMS破解:Make">
+        <MSBuild Projects="GMS破解.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TisnPackage">
+        <MSBuild Projects="..\控件包\TisnPackage.dproj"/>
+    </Target>
+    <Target Name="TisnPackage:Clean">
+        <MSBuild Projects="..\控件包\TisnPackage.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TisnPackage:Make">
+        <MSBuild Projects="..\控件包\TisnPackage.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="GMS破解;TisnPackage"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="GMS破解:Clean;TisnPackage:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="GMS破解:Make;TisnPackage:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

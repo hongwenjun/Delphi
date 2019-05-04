@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="M:\lazarus\fpc\3.0.0\bin\x86_64-win64\fpc.exe" Date="1213098656"/>
+  <Params Value=" -Mdelphi -Scghi -O1 -g -gl -WG -l -vewnhibq -FuM:\lazarus\lcl\units\x86_64-win64\win32 -FuM:\lazarus\lcl\units\x86_64-win64 -FuM:\lazarus\components\lazutils\lib\x86_64-win64 -FuM:\lazarus\packager\units\x86_64-win64 -FuD:\360data\重要数据\Documents\百度云同步盘\vspro\Delphi工程\cdrPlugin1\ -dLCL -dLCLwin32 -dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL cdrPlugin1.dpr"/>
+  <Complete Value="False"/>
+</CONFIG>

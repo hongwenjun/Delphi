@@ -1,0 +1,11 @@
+USEUNIT(".\bitstream.cpp");
+USEUNIT(".\codedata.cpp");
+USEUNIT(".\container.cpp");
+USEUNIT(".\ecidecoder.cpp");
+USEUNIT(".\formatinfo.cpp");
+USEUNIT(".\galois.cpp");
+USEUNIT(".\imagereader.cpp");
+USEUNIT(".\libdecodeqr.cpp");
+USEFILE("vctobpr.log");
+
+#define Library

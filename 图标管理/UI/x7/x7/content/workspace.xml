@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<uiConfig>
+    <applicationInfo name="CorelDRAW" framework="CorelDRAW" version="17" userConfiguration="true" localizedLang="CS"></applicationInfo>
+    <userData></userData>
+    <commandBars>
+    </commandBars>
+    <items>
+        <whatsNew sinceVersion="off"></whatsNew>
+    </items>
+</uiConfig>

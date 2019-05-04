@@ -1,0 +1,1 @@
+全部都在install.ini

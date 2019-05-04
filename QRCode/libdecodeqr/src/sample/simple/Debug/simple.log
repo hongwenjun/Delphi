@@ -1,0 +1,12 @@
+﻿生成启动时间为 2016-07-04 10:01:41。
+     1>项目“D:\360data\Data\文档\百度云同步盘\vspro\Delphi工程\QRCode\libdecodeqr\src\sample\simple\simple.vcxproj”在节点 2 上(Build 个目标)。
+     1>Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Debug\simple.exe" /INCREMENTAL /NOLOGO cv.lib cxcore.lib highgui.lib ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:".\Debug\simple.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Debug\simple.lib" /MACHINE:X86 /SAFESEH .\Debug\simpletest.obj
+         ..\..\libdecodeqr\Debug\libdecodeqr.lib
+     1>simpletest.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/SAFESEH”规范)
+         simple.vcxproj -> D:\360data\Data\文档\百度云同步盘\vspro\Delphi工程\QRCode\libdecodeqr\src\sample\simple\.\Debug\simple.exe
+     1>已完成生成项目“D:\360data\Data\文档\百度云同步盘\vspro\Delphi工程\QRCode\libdecodeqr\src\sample\simple\simple.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:09.63

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="cdrPlugin1.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="3" Y="12"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="M:\lazarus\fpc\3.0.0\source\rtl\win64\windows.pp"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="X8\VGCore_TLB.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="23427"/>
+        <CursorPos X="6" Y="23444"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+    </Units>
+    <JumpHistory Count="9" HistoryIndex="8">
+      <Position1>
+        <Filename Value="cdrPlugin1.dpr"/>
+      </Position1>
+      <Position2>
+        <Filename Value="cdrPlugin1.dpr"/>
+        <Caret Line="17" Column="29" TopLine="86"/>
+      </Position2>
+      <Position3>
+        <Filename Value="cdrPlugin1.dpr"/>
+        <Caret Column="20"/>
+      </Position3>
+      <Position4>
+        <Filename Value="cdrPlugin1.dpr"/>
+        <Caret Line="8" Column="3"/>
+      </Position4>
+      <Position5>
+        <Filename Value="cdrPlugin1.dpr"/>
+        <Caret Line="12" Column="12"/>
+      </Position5>
+      <Position6>
+        <Filename Value="X8\VGCore_TLB.pas"/>
+      </Position6>
+      <Position7>
+        <Filename Value="X8\VGCore_TLB.pas"/>
+        <Caret Line="116" Column="63" TopLine="102"/>
+      </Position7>
+      <Position8>
+        <Filename Value="X8\VGCore_TLB.pas"/>
+        <Caret Line="118" Column="39" TopLine="102"/>
+      </Position8>
+      <Position9>
+        <Filename Value="X8\VGCore_TLB.pas"/>
+        <Caret Line="120" Column="30" TopLine="102"/>
+      </Position9>
+    </JumpHistory>
+  </ProjectSession>
+  <SkipCheckLCLInterfaces Value="True"/>
+</CONFIG>

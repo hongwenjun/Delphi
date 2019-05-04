@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{538A7FCB-8C99-475B-AB70-C2FE836944BA}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="cdrPlugin1.dproj">
+            <Dependencies>..\控件包\TisnPackage.dproj</Dependencies>
+        </Projects>
+        <Projects Include="Test\test.dproj">
+            <Dependencies>..\控件包\TisnPackage.dproj</Dependencies>
+        </Projects>
+        <Projects Include="..\控件包\TisnPackage.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="cdrPlugin1" DependsOnTargets="TisnPackage">
+        <MSBuild Projects="cdrPlugin1.dproj"/>
+    </Target>
+    <Target Name="cdrPlugin1:Clean" DependsOnTargets="TisnPackage:Clean">
+        <MSBuild Projects="cdrPlugin1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cdrPlugin1:Make" DependsOnTargets="TisnPackage:Make">
+        <MSBuild Projects="cdrPlugin1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="test" DependsOnTargets="TisnPackage">
+        <MSBuild Projects="Test\test.dproj"/>
+    </Target>
+    <Target Name="test:Clean" DependsOnTargets="TisnPackage:Clean">
+        <MSBuild Projects="Test\test.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="test:Make" DependsOnTargets="TisnPackage:Make">
+        <MSBuild Projects="Test\test.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TisnPackage">
+        <MSBuild Projects="..\控件包\TisnPackage.dproj"/>
+    </Target>
+    <Target Name="TisnPackage:Clean">
+        <MSBuild Projects="..\控件包\TisnPackage.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TisnPackage:Make">
+        <MSBuild Projects="..\控件包\TisnPackage.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="cdrPlugin1;test;TisnPackage"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="cdrPlugin1:Clean;test:Clean;TisnPackage:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="cdrPlugin1:Make;test:Make;TisnPackage:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

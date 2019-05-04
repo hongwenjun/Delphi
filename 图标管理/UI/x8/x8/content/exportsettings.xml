@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<workspaceExportSettings name="CorelDRAW" framework="CorelDRAW" version="18">
+    <toolbars>
+        <toolbar selected="false" guid="f82791a4-048c-48f1-a059-cb2c3fd0815b" name="变换" />
+        <toolbar selected="false" guid="c2b44f69-6dec-444e-a37e-5dbf7ff43dae" name="标准" />
+        <toolbar selected="false" guid="26278692-c566-47cb-83c4-79b58ce69538" name="布局" />
+        <toolbar selected="false" guid="7c905e2a-cb64-4ba1-aff0-c306f392680c" name="工具箱" />
+        <toolbar selected="false" guid="0bb6bbf9-ae93-4b0c-b11d-45184f69ad39" name="合并打印" />
+        <toolbar selected="false" guid="bf935726-aeb5-4b71-8c3c-8d17ab7d53aa" name="宏" />
+        <toolbar selected="false" guid="74e03d83-404c-49f5-824a-fe0fd02ab29a" name="属性栏" />
+        <toolbar selected="false" guid="3cc76550-c8c1-420f-bccb-c5ea2baf2e65" name="缩放" />
+        <toolbar selected="false" guid="e71e8d2e-9f74-44da-8582-20f977363f5b" name="文本" />
+        <toolbar selected="false" guid="57ddc38e-3367-479f-8b2a-4b531ae8cf2a" name="因特网" />
+    </toolbars>
+    <menus>
+        <menu selected="false" guid="f3016f3c-2847-4557-b61a-a2d05319cf18" name="菜单栏" />
+        <menu selected="false" guid="820457fe-c6e7-4649-ae21-05698467984d" name="上下文菜单栏" />
+    </menus>
+    <statusbars />
+    <options exportShortcutKeys="false" exportDockers="false" exportApplicationData="false" />
+</workspaceExportSettings>

@@ -1,0 +1,12 @@
+Reading configurations from .\libdecodeqr.dsp
+Finished reading configurations from .\libdecodeqr.dsp
+ Converting D:\360data\Data\文档\百度云同步盘\vspro\Delphi工程\QRCode\libdecodeqr\src\libdecodeqr\libdecodeqr.dsw
+Generating project group file D:\360data\Data\文档\百度云同步盘\vspro\Delphi工程\QRCode\libdecodeqr\src\libdecodeqr\libdecodeqr.bpg
+libdecodeqr.bpg generated
+Done converting workspace file D:\360data\Data\文档\百度云同步盘\vspro\Delphi工程\QRCode\libdecodeqr\src\libdecodeqr\libdecodeqr.dsw
+ Converting .\libdecodeqr.dsp
+Using configuration "libdecodeqr - Win32 Debug"
+Warning: no conversion for compiler option: /Gm
+Warning: no conversion for compiler option: /FD
+Warning: no conversion for compiler option: /GZ
+Generating libdecodeqr.bpr
